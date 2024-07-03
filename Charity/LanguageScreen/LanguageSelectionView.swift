@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 protocol LanguageSelectionViewDelegate: AnyObject {
-    func didSelectLanguage(_ language: String)
+    func didSelectLanguage(_ languageKey: String)
 }
 
 class LanguageSelectionView: UIView {
@@ -13,7 +13,7 @@ class LanguageSelectionView: UIView {
     let chooseLanguage: UILabel = {
         let text = UILabel()
         text.font = UIFont(name: "SFProText-Semibold", size: 20)
-        text.text = "Выберите язык"
+        text.text = Constants.localizedTexts["en"]?.chooseLanguage
         text.numberOfLines = 0
         text.translatesAutoresizingMaskIntoConstraints = false
         return text
@@ -52,10 +52,11 @@ class LanguageSelectionView: UIView {
             make.center.equalToSuperview()
         }
         
-        for language in languages {
+        for languageKey in languages {
+            guard let language = Constants.localizedTexts[languageKey] else { continue }
             let button = UIButton()
             var config = UIButton.Configuration.plain()
-            config.title = language
+            config.title = language.choice
             config.image = UIImage(systemName: "circle")
             config.imagePadding = 10
             config.imagePlacement = .leading
@@ -64,6 +65,7 @@ class LanguageSelectionView: UIView {
             button.contentHorizontalAlignment = .left
             button.addTarget(self, action: #selector(languageButtonTapped(_:)), for: .touchUpInside)
             button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+            button.accessibilityIdentifier = languageKey  // Store the language key
             languagesStack.addArrangedSubview(button)
             languageButtons.append(button)
         }
@@ -76,8 +78,9 @@ class LanguageSelectionView: UIView {
         selectedConfig?.image = UIImage(systemName: "smallcircle.filled.circle")
         sender.configuration = selectedConfig
 
-        if let selectedLanguage = sender.configuration?.title {
-            delegate?.didSelectLanguage(selectedLanguage)
+        if let languageKey = sender.accessibilityIdentifier {
+            delegate?.didSelectLanguage(languageKey)
+//            chooseLanguage.text = Constants.localizedTexts[languageKey]?.chooseLanguage
         }
     }
     

@@ -1,15 +1,10 @@
-//
-//  LanguageView.swift
-//  Charity
-//
-//  Created by Ai Hawok on 27/06/2024.
-//
 import UIKit
 import SnapKit
 
 class LanguageView: UIView {
 
     let appInfoView = AppInfoView()
+    let languageSelectionView: LanguageSelectionView
 
     let startButton: UIButton = {
         let button = UIButton()
@@ -18,8 +13,6 @@ class LanguageView: UIView {
         button.layer.cornerRadius = 18
         return button
     }()
-    
-    let languageSelectionView: LanguageSelectionView
 
     override init(frame: CGRect) {
         self.languageSelectionView = LanguageSelectionView(languages: Constants.languages)
@@ -36,19 +29,18 @@ class LanguageView: UIView {
         [appInfoView, languageSelectionView, startButton].forEach { addSubview($0) }
 
         let screenHeight = UIScreen.main.bounds.height
-        
+
         appInfoView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(140)
             make.centerX.equalToSuperview()
-            make.height.equalTo(screenHeight/2)
+            make.height.equalTo(screenHeight / 3)
             make.leading.trailing.equalToSuperview()
         }
 
         languageSelectionView.snp.makeConstraints { make in
-//            make.top.equalTo(appInfoView.snp.bottom)
             make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalTo(startButton.snp.top)
-            make.height.equalTo(screenHeight/3)
+            make.top.equalTo(appInfoView.snp.bottom).offset(20)
+            make.height.equalTo(screenHeight / 3)
         }
 
         startButton.snp.makeConstraints { make in

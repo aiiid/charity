@@ -23,5 +23,9 @@ class LanguageViewController: UIViewController, LanguageSelectionViewDelegate {
 
     func didSelectLanguage(_ language: String) {
         print("Selected language: \(language)")
+        if let localizedText = Constants.localizedTexts[language] {
+            contentView.languageSelectionView.chooseLanguage.text = localizedText.chooseLanguage
+            contentView.startButton.setTitle(localizedText.button, for: .normal)
+        }
     }
 }

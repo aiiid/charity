@@ -7,8 +7,20 @@
 
 import UIKit
 
+struct LocalizedText {
+    let choice: String
+    let chooseLanguage: String
+    let button: String
+}
+
 struct Constants {
-    static let languages = ["Русский язык", "Қазақ тілі", "English Language"]
+    static let languages = ["ru", "kz", "en"]
+    
+    static let localizedTexts: [String: LocalizedText] = [
+        "ru": LocalizedText(choice: "Русский язык", chooseLanguage: "Выберите язык", button: "Начать"),
+        "kz": LocalizedText(choice: "Қазақ тілі", chooseLanguage: "Тілді таңдаңыз", button: "Бастау"),
+        "en": LocalizedText(choice: "English Language", chooseLanguage: "Choose Language", button: "Start")
+        ]
     
     struct Colors {
         static let primaryColor = UIColor(hex: "#136E63")
